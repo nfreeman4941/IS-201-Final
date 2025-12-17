@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nina Freeman – Resume</title>
+  <style>
+    :root {
+      --lavender: #e6dcf3;
+      --lavender-dark: #c7b6e3;
+      --green: #8fae8f;
+      --brown: #d8c6b2;
+      --text: #2f2f2f;
+      --card-bg: #ffffffcc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(180deg, var(--lavender), #f7f3fb);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+    }
+
+    .contact {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      border-left: 6px solid var(--green);
+      padding-left: 0.75rem;
+      margin-bottom: 1.2rem;
+      font-size: 1.6rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+
+    /* Accordion */
+    .accordion-header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .accordion-header span {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      margin-top: 0.5rem;
+    }
+
+    .accordion.open .accordion-content {
+      max-height: 500px;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.6rem 1.5rem;
+    }
+
+    .skill {
+      background: var(--brown);
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #8fae8f; /* complementary green */
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/IMG_4819.HEIC" alt="Profile picture" class="profile-pic">
+        <h1>Nina Freeman</h1>
+      <p>Current Brigham Young University Undergraduate</p>
+      <div class="contact">
+        (907) 982-7315 · nfreeman4941@gmail.com
+      </div>
+    </header>
+
+    <section>
+      <h2>Profile</h2>
+      <div class="card">
+        I am currently a sophomore at BYU-Provo. I was often considered responsible and reliable by past teachers and employers. I am quick on my feet, organized, reliable, and very observant. I look forward to contributing to and learning from my next job experience!
+      </div>
+    </section>
+
+    <section>
+      <h2>Key Competencies</h2>
+      <div class="card skills-grid">
+        <div class="skill">Teamwork (5/5)</div>
+        <div class="skill">Strong Work Ethic (5/5)</div>
+        <div class="skill">Communication (5/5)</div>
+        <div class="skill">Customer Service (5/5)</div>
+        <div class="skill">Organizational Skills (5/5)</div>
+        <div class="skill">Leadership (4/5)</div>
+        <div class="skill">Time Management (4/5)</div>
+        <div class="skill">Quick Math (4/5)</div>
+        <div class="skill">Attention to Detail (4/5)</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Work Experience</h2><span><h6>(Click to see more)</h6></span>
+
+      <div class="card accordion">
+        <div class="accordion-header">
+          <div>Valley Native Wellness Center – Administrative Support II</div>
+          <span>05/2025 – 08/2025</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Greet and check-in Customer-Owners at the front desk</li>
+            <li>Schedule, reschedule, and cancel appointments</li>
+            <li>Handle phone inquiries and initiate support calls</li>
+            <li>Utilize Microsoft Office tools for organization and communication</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card accordion">
+        <div class="accordion-header">
+          <div>Freedom Physical Therapy – Office Administration</div>
+          <span>05/2024 – 08/2024</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Billing and accounting through Office Ally</li>
+            <li>Organized and maintained all past files</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card accordion">
+        <div class="accordion-header">
+          <div>Wilkinson Student Center Custodial – Crew Member</div>
+          <span>12/2024 – 04/2025</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Cleaned and cared for the building</li>
+            <li>Time management and efficiency</li>
+            <li>Independent responsibilities</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card accordion">
+        <div class="accordion-header">
+          <div>McDonald's Restaurant – Crew Member</div>
+          <span>03/2024 – 07/2024</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Processed payments at the payment window</li>
+            <li>Took orders at drive-thru and in-store counter</li>
+            <li>Managed and delivered customer orders cheerfully</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card accordion">
+        <div class="accordion-header">
+          <div>The Christmas Factory – Tour Guide</div>
+          <span>10/2022 – 12/2022</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Memorized full script and improvised guest interactions</li>
+            <li>Led multiple groups of 20+ nightly</li>
+            <li>Practiced time management while in character</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education & Certifications</h2>
+      <div class="card">
+        <strong>Brigham Young University</strong><br />
+        Class of 2028 · Pre-Business (Planning to apply to Accounting)<br />
+        45 completed credits · 3.58 GPA
+        <br /><br />
+        <strong>Colony High School Diploma</strong><br />
+        Class of 2024 · Ranked #5 in class<br />
+        AP Student · 4.27 GPA
+      </div>
+    </section>
+
+    <section>
+      <h2>Extracurricular & Volunteer Experience</h2>
+      <div class="card">
+        <ul>
+          <li>National Honor Society Secretary (2022–2024)</li>
+          <li>Mat-Su Youth Orchestra – First Chair Violist (2019–2023)</li>
+          <li>President of Church Organization Class (2021–2023)</li>
+          <li>Kidz Kupboard Volunteer (08/2022 – 05/2024)</li>
+          <li>CHS Snack Shack Volunteer (2022 – 05/2024)</li>
+          <li>University Chorale (2024 – Now)</li>
+          <li>Y-Serve (2024 – Now)</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Nina Freeman
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>

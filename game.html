@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>1v1 Duel</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: url(images/gladiator.jpg) no-repeat center center fixed;
+        background-size: cover;
+        color: #e5e9f0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+
+    .modal-content {
+        background: #3b2a1a;
+        padding: 20px;
+        border-radius: 16px;
+        width: 300px;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        text-align: center;
+    }
+
+    .modal-content h2 { margin-top: 0; }
+
+    .modal-content ul {
+        padding-left: 18px;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .game {
+        width: 360px;
+        background: #2b1d12;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 { text-align: center; font-weight: 600; margin: 0; }
+
+    .bar { background: #444c5c; border-radius: 8px; overflow: hidden; height: 16px; margin-top: 6px; }
+    .fill { height: 100%; width: 100%; transition: width 0.4s; }
+    .player .fill { background: #81a1c1; }
+    .enemy .fill { background: #bf616a; }
+
+    .section { font-size: 14px; }
+
+    .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    button.action {
+        background: #3b4252;
+        border: none;
+        border-radius: 12px;
+        padding: 12px;
+        color: #eceff4;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        transition: transform 0.1s, background 0.2s;
+    }
+
+    button.action span { font-size: 22px; }
+    button.action:hover { background: #4c566a; transform: translateY(-2px); }
+
+    .log { background: #1e222b; border-radius: 10px; padding: 10px; font-size: 13px; height: 90px; overflow-y: auto; }
+    #openRules { margin-bottom: 8px; }
+
+    #rematchBtn {
+        margin-top: 12px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #81a1c1;
+        color: #1b1f27;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #rematchBtn:hover { background: #5e7c99; }
+    .scoreboard {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #eceff4;
+}
+.back-link {
+    position: fixed;
+    bottom: 20px;        /* distance from bottom of viewport */
+    left: 50%;           /* center horizontally */
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 5;          /* above background but below modals */
+}
+
+.back-link a {
+    color: #81a1c1;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    background: rgba(43, 29, 18, 0.8);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="modal" id="rulesModal">
+    <div class="modal-content">
+        <button class="close" id="closeRules">✕</button>
+        <h2>⚔️ Duel Rules</h2>
+        <ul>
+            <li>You and the enemy take turns.</li>
+            <li>🗡️ Attack: Deal damage (stronger if charged).</li>
+            <li>🛡️ Defend: Incoming damage is reduced to <strong>5</strong>.</li>
+            <li>✨ Heal: Restore health (cannot heal twice in a row).</li>
+            <li>⚡ Charge: Power up attacks (max 2 charges).</li>
+            <li>First to reach 0 HP loses.</li>
+        </ul>
+    </div>
+</div>
+<div class="back-link">
+    <a href="index.html">Back to Webpage</a>
+</div>
+<div class="game">
+    <button id="openRules">📜 Rules</button>
+    <div class="scoreboard">
+    Wins: <span id="wins">0</span> | Losses: <span id="losses">0</span>
+</div>
+
+    <h1>⚔️ Duel</h1>
+    <div class="section player">You<div class="bar"><div class="fill" id="playerHP"></div></div></div>
+    <div class="section enemy">Enemy<div class="bar"><div class="fill" id="enemyHP"></div></div></div>
+    <div class="actions">
+        <button class="action" data-action="attack"><span>🗡️</span>Attack</button>
+        <button class="action" data-action="defend"><span>🛡️</span>Defend</button>
+        <button class="action" data-action="heal"><span>✨</span>Heal</button>
+        <button class="action" data-action="charge"><span>⚡</span>Charge</button>
+    </div>
+    <div class="log" id="log"></div>
+</div>
+
+<div class="modal" id="endModal" style="display:none;">
+    <div class="modal-content">
+        <button class="close" id="closeEnd">✕</button>
+        <h2 id="endMessage"></h2>
+        <button id="rematchBtn">🔄 Rematch</button>
+    </div>
+</div>
+
+<script>
+let playerHP = 100;
+let enemyHP = 100;
+let charged = 0;
+let defending = false;
+let lastHealPlayer = false;
+let lastHealEnemy = false;
+let playerTurn = true; // Track whose turn it is
+let wins = 0;
+let losses = 0;
+
+const winsSpan = document.getElementById('wins');
+const lossesSpan = document.getElementById('losses');
+
+function updateScoreboard() {
+    winsSpan.textContent = wins;
+    lossesSpan.textContent = losses;
+}
+
+
+const playerBar = document.getElementById('playerHP');
+const enemyBar = document.getElementById('enemyHP');
+const log = document.getElementById('log');
+const rulesModal = document.getElementById('rulesModal');
+const endModal = document.getElementById('endModal');
+const endMessage = document.getElementById('endMessage');
+const rematchBtn = document.getElementById('rematchBtn');
+
+function updateBars(){
+    playerBar.style.width = playerHP+'%';
+    enemyBar.style.width = enemyHP+'%';
+}
+
+function addLog(text){
+    log.innerHTML += text+'<br>';
+    log.scrollTop = log.scrollHeight;
+}
+
+function checkEnd(){
+    if(playerHP<=0){ endMessage.textContent='You were defeated!'; showEndModal(); }
+    if(enemyHP<=0){ endMessage.textContent='You were victorious!'; showEndModal(); }
+    if(playerHP <= 0){
+    losses++;
+    updateScoreboard();
+    endMessage.textContent='You were defeated!';
+    showEndModal();
+}
+if(enemyHP <= 0){
+    wins++;
+    updateScoreboard();
+    endMessage.textContent='You were victorious!';
+    showEndModal();
+}
+
+}
+
+function showEndModal(){
+    endModal.style.display='flex';
+    disableButtons();
+}
+
+function disableButtons(){
+    document.querySelectorAll('.actions button').forEach(b=>b.disabled=true);
+}
+function enableButtons(){
+    document.querySelectorAll('.actions button').forEach(b=>b.disabled=false);
+}
+
+function enemyTurn(){
+    if(playerHP<=0||enemyHP<=0) return;
+    let action=Math.random();
+    let damage=Math.floor(Math.random()*12)+8;
+    if(defending) damage=5;
+    if(action<0.65){ playerHP-=damage; addLog(`Enemy attacks for ${damage}.`); lastHealEnemy=false; }
+    else if(!lastHealEnemy){ enemyHP=Math.min(100,enemyHP+15); addLog('Enemy heals.'); lastHealEnemy=true; }
+    else{ playerHP-=damage; addLog(`Enemy attacks for ${damage}.`); lastHealEnemy=false; }
+    defending=false;
+    updateBars();
+    checkEnd();
+    playerTurn = true; // Give control back to player
+    if(playerHP>0 && enemyHP>0){ enableButtons(); }
+}
+
+document.querySelectorAll('.actions button').forEach(button=>{
+    button.onclick=()=>{
+        if(!playerTurn || playerHP<=0||enemyHP<=0) return; // Prevent player acting out of turn
+        playerTurn = false;
+        disableButtons(); // Disable until enemy finishes
+        const action=button.dataset.action;
+        let damage;
+        if(action==='attack'){ damage=charged>0?15+charged*10:15; enemyHP-=damage; addLog(`You attack for ${damage}.`); charged=0; lastHealPlayer=false; }
+        if(action==='defend'){ defending=true; addLog('You block and brace yourself.'); lastHealPlayer=false; }
+        if(action==='heal'){ if(lastHealPlayer){ addLog('You cannot heal twice in a row.'); playerTurn=true; enableButtons(); return; } playerHP=Math.min(100,playerHP+20); addLog('You heal yourself.'); lastHealPlayer=true; }
+        if(action==='charge'){ if(charged>=2){ addLog('You can only charge twice before attacking.'); playerTurn=true; enableButtons(); return; } charged++; addLog('You gather strength.'); lastHealPlayer=false; }
+        updateBars();
+        checkEnd();
+        if(enemyHP>0 && playerHP>0){ setTimeout(enemyTurn,600); }
+    };
+});
+
+document.getElementById('closeRules').onclick=()=>{ rulesModal.style.display='none'; };
+document.getElementById('openRules').onclick=()=>{ rulesModal.style.display='flex'; };
+document.getElementById('closeEnd').onclick=()=>{ endModal.style.display='none'; };
+
+rematchBtn.onclick=()=>{
+    playerHP=100; enemyHP=100; charged=0; defending=false;
+    lastHealPlayer=false; lastHealEnemy=false;
+    playerTurn = true;
+    updateBars(); log.innerHTML=''; endModal.style.display='none'; enableButtons();
+};
+
+updateBars();
+
+</script>
+</body>
+</html>
